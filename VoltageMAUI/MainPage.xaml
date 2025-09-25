@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VoltageMAUI.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Spacing="50"
+            >
+            
+            <Image
+                Source="emh_meter.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+
+            <Label
+                Text="Beräkningssnurra"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Picker
+             x:Name ="UnitPicker"
+             Title="Välj enhet"
+             SelectedIndexChanged="UnitPicker_SelectedIndexChanged"/>
+
+            <Grid
+                Padding="25"
+                ColumnSpacing="25"
+                RowSpacing="25"
+                >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Text="Ange primär spänning (V)" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry
+                    x:Name="PrimaryCurrent"
+                    Placeholder="22000..."
+                    Keyboard="Numeric"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="1"
+                    />
+                <Label Text="Ange primär ström (A)" Grid.Row="2" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry
+                    x:Name="PrimaryVoltage"
+                    Placeholder="220"
+                    Keyboard="Numeric"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="1"
+                    />
+                <Label Text="Effekt (kW)" Grid.Row="3" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry
+                    x:Name="Effect"
+                    IsReadOnly="True"
+                    Placeholder="t.ex. 230"
+                    Keyboard="Numeric"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="1"
+                />
+                <Button
+                    Text="Beräkna"
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Clicked="OnCalculateClicked"
+                    />
+            </Grid>
+            <Label
+                 Text="Pulsutgång"
+                 Style="{StaticResource Headline}"
+                 SemanticProperties.HeadingLevel="Level1" />
+                    <Grid
+                    Padding="25"
+                    ColumnSpacing="25"
+                    RowSpacing="25"
+                             >   
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Text="Ange en pulskonstant (pulser/xWh)" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry
+                    x:Name="PulsConstant"
+                    Placeholder="22000..."
+                    Keyboard="Numeric"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="1"
+                    />
+              
+                <Label Text="Uträknad pulsfrekvens (Hz)" Grid.Row="3" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry
+                x:Name="CalcPuls"
+                IsReadOnly="True"
+                Placeholder="t.ex. 230"
+                Keyboard="Numeric"
+                Grid.Row="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="1"
+            />
+                <Button
+             Text="Beräkna"
+             Grid.Row="4"
+             Grid.Column="0"
+             Grid.ColumnSpan="2"
+             Clicked="OnCalculatePulsFreq"
+             /> 
+
+
+            </Grid>
+
+            <Label
+                 Text="Räknevärk"
+                 Style="{StaticResource Headline}"
+                 SemanticProperties.HeadingLevel="Level1" />
+                    <Grid
+                Padding="25"
+                ColumnSpacing="25"
+                RowSpacing="25"
+                 >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Text="Ange Max mätarstäkkning (kW, heltal)" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry
+                        x:Name="MeterMax"
+                        Placeholder="99999999"
+                        Keyboard="Numeric"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="1"
+                        />
+            <Label Text="Omslagstid för räknevärk" Grid.Row="2" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
+                                <Entry
+                    x:Name="CalcCounter"
+                    IsReadOnly="True"
+                    Placeholder="t.ex. 230"
+                    Keyboard="Numeric"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="1"
+                />
+                            <Button
+                 Text="Beräkna"
+                 Grid.Row="3"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="2"
+                 Clicked="OnCalculateCounter"
+                 />
+
+
+            </Grid>
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

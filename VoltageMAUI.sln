@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoltageMAUI", "VoltageMAUI\VoltageMAUI.csproj", "{CF38B1B8-703C-47E2-ABA1-D399F7838622}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF38B1B8-703C-47E2-ABA1-D399F7838622}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF38B1B8-703C-47E2-ABA1-D399F7838622}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF38B1B8-703C-47E2-ABA1-D399F7838622}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF38B1B8-703C-47E2-ABA1-D399F7838622}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19225FDD-98C3-4660-B1F4-7FD0AC1048F0}
+	EndGlobalSection
+EndGlobal
