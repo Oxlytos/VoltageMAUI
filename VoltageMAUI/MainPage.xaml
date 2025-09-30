@@ -10,6 +10,7 @@
             Spacing="50"
             >
             
+            <!---Logga-->
             <Image
                 Source="emh_meter.png"
                 HeightRequest="185"
@@ -26,6 +27,7 @@
              Title="Välj enhet"
              SelectedIndexChanged="UnitPicker_SelectedIndexChanged"/>
 
+            <!--Skapa kolumner och rader-->
             <Grid
                 Padding="25"
                 ColumnSpacing="25"
@@ -37,20 +39,30 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
+                <!---Primärvärden-->
                 <Label Text="Ange primär spänning (V)" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
+
                 <Entry
                     x:Name="PrimaryCurrent"
+                      TextChanged="UpdateValuesReactive"
                     Placeholder="22000..."
                     Keyboard="Numeric"
                     Grid.Row="1"
                     Grid.Column="1"
                     Grid.ColumnSpan="1"
                     />
+
                 <Label Text="Ange primär ström (A)" Grid.Row="2" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
                 <Entry
                     x:Name="PrimaryVoltage"
@@ -59,8 +71,10 @@
                     Grid.Row="2"
                     Grid.Column="1"
                     Grid.ColumnSpan="1"
+                    TextChanged="UpdateValuesReactive"
+                    
                     />
-                <Label Text="Effekt (kW)" Grid.Row="3" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Label Text="Effekt (P)" Grid.Row="3" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
                 <Entry
                     x:Name="Effect"
                     IsReadOnly="True"
@@ -70,14 +84,66 @@
                     Grid.Column="1"
                     Grid.ColumnSpan="1"
                 />
-                <Button
-                    Text="Beräkna"
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Clicked="OnCalculateClicked"
-                    />
+
+
+                <!--Sekundärvärden-->
+                <Label Text="Cos φ" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry
+                    x:Name="Cos"
+                    Placeholder="Extra fält"
+                    Keyboard="Numeric"
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    TextChanged="UpdateValuesReactive"
+                    Grid.ColumnSpan="1"/>
+                
+                
+                
+                <Label Text="Tid(h)" Grid.Row="2" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry
+                 x:Name="InputH"
+                 Placeholder="Extra fält"
+                 Keyboard="Numeric"
+                 Grid.Row="2"
+                 Grid.Column="3"
+                 TextChanged="UpdateValuesReactive"
+                 Grid.ColumnSpan="1"/>
+                
+                
+                
+                <Label Text="Aktiv effekt (h)" Grid.Row="3" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry
+                  x:Name="EffectH"
+                  IsReadOnly="True"
+                  Placeholder="Aktiv kVh"
+                  Keyboard="Numeric"
+                  Grid.Row="3"
+                  Grid.Column="3"
+                  Grid.ColumnSpan="1"/>
+                
+                
+                <Label Text="Skenbar effekt (S)" Grid.Row="4" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry
+                  x:Name="ApparentPower"
+                  IsReadOnly="True"
+                  Placeholder="Skeneffekt"
+                  Keyboard="Numeric"
+                  Grid.Row="4"
+                  Grid.Column="3"
+                  Grid.ColumnSpan="1"/>
+                
+                
+                <Label Text="Reaktiv effekt" Grid.Row="5" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Entry
+                  x:Name="ReactivePower"
+                  IsReadOnly="True"
+                  Placeholder="Reaktiv effekt"
+                  Keyboard="Numeric"
+                  Grid.Row="5"
+                  Grid.Column="3"
+                  Grid.ColumnSpan="1"/>
             </Grid>
+            <!--Pulsfrekvenser-->
             <Label
                  Text="Pulsutgång"
                  Style="{StaticResource Headline}"
@@ -96,11 +162,13 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Label Text="Ange en pulskonstant (pulser/xWh)" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
                 <Entry
                     x:Name="PulsConstant"
+                       TextChanged="UpdateValuesReactive"
                     Placeholder="22000..."
                     Keyboard="Numeric"
                     Grid.Row="1"
@@ -124,11 +192,33 @@
              Grid.Column="0"
              Grid.ColumnSpan="2"
              Clicked="OnCalculatePulsFreq"
-             /> 
+             />
+                <Label Text="LED Pulsindikator" Grid.Row="2" Grid.Column="0"/>
+                <Entry
+                x:Name="Millis"
+                IsReadOnly="True"
+                Placeholder="Ms här"
+                Keyboard="Numeric"
+                Grid.Row="2"
+                Grid.Column="1"
+                Grid.ColumnSpan="1"
+            />
+
+                <BoxView
+                x:Name="PulsIndicator"
+                Color="Gray"
+                WidthRequest="30"
+                HeightRequest="30"
+                CornerRadius="15"
+                Grid.Row="2"
+                Grid.Column="2"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
 
 
             </Grid>
 
+            <!---Räknevärksdelen-->
             <Label
                  Text="Räknevärk"
                  Style="{StaticResource Headline}"
@@ -149,6 +239,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
+                <!-- 99999999-->
                 <Label Text="Ange Max mätarstäkkning (kW, heltal)" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
                 <Entry
                         x:Name="MeterMax"
@@ -158,6 +249,7 @@
                         Grid.Column="1"
                         Grid.ColumnSpan="1"
                         />
+                  <!--Resultat i år-->
             <Label Text="Omslagstid för räknevärk" Grid.Row="2" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
                                 <Entry
                     x:Name="CalcCounter"
