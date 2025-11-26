@@ -30,9 +30,9 @@ namespace VoltageMAUI
 
             var units = new List<UnitOption>() //Creating different options
             {
-                new UnitOption { Name = "Kilo",Value = 1_000, ActiveSymbol = "kW", ApparentSymbol = "kVA", ReactiveSymbol = "kVAr", EnergySymbol ="kWh" },
-                new UnitOption { Name = "Mega",Value = 1_000_000, ActiveSymbol = "MW", ApparentSymbol = "MVA", ReactiveSymbol = "MVAr", EnergySymbol = "MWh"},
-                new UnitOption { Name = "Giga", Value = 1_000_000_000, ActiveSymbol = "GW", ApparentSymbol = "GVA", ReactiveSymbol ="GVAr", EnergySymbol = "GWh" },
+                new UnitOption { Name = "Kilo",Value = 1_000, ActiveSymbol = "kW", ApparentSymbol = "kVA", ReactiveSymbol = "kvar", EnergySymbol ="kWh" },
+                new UnitOption { Name = "Mega",Value = 1_000_000, ActiveSymbol = "MW", ApparentSymbol = "MVA", ReactiveSymbol = "mvar", EnergySymbol = "MWh"},
+                new UnitOption { Name = "Giga", Value = 1_000_000_000, ActiveSymbol = "GW", ApparentSymbol = "GVA", ReactiveSymbol ="gvar", EnergySymbol = "GWh" },
             };
 
             UnitPicker.ItemsSource = units;
@@ -102,6 +102,15 @@ namespace VoltageMAUI
 
                 //Puls frequency imp/kWh
                 pulseFrequency = (effect_kw * pulseConstant) / 3600m;
+                if(pulseFrequency>10 || pulseFrequency < 2)
+                {
+                    HzWarning.TextColor = Colors.Yellow;
+                    HzWarning.Text = "Rekommenderad pulfrekvens är runt 8-10";
+                }
+                else
+                {
+                    HzWarning.Text = "-";
+                }
 
                 CalcPuls.Text = pulseFrequency.ToString("0.####");
                 StartLEDPulse();
@@ -165,8 +174,18 @@ namespace VoltageMAUI
                 {
                     decimal counter = ((decimal)meterReading / yearlyCounter_kWh);
                     decimal yearsUntilFull = counter;
-                    //Display years with 7 decimals
-                    CalcCounter.Text = $"{yearsUntilFull:0.##} år";
+                    decimal hoursUntilFull = yearsUntilFull * 365 * 24;
+                    if (hoursUntilFull < 4000)
+                    {
+                        WarningCounter.Text = "Omslagstid för mätare under 4000 timmar";
+                        WarningCounter.TextColor = Colors.Yellow;
+                    }
+                    else
+                    {
+                        WarningCounter.Text = "-";
+                    }
+                        //Display years with 7 decimals
+                        CalcCounter.Text = $"{yearsUntilFull:0.##} år ({hoursUntilFull.ToString("0.##")} timmar)";
                 }
                 else
                 {

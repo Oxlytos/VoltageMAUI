@@ -15,7 +15,7 @@
                 Source="emh_meter.png"
                 HeightRequest="185"
                 Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+                SemanticProperties.Description="En EMH mätare(Zähler)" />
 
             <Label
                 Text="Beräkningssnurra"
@@ -25,7 +25,9 @@
             <Picker
              x:Name ="UnitPicker"
              Title="Välj enhet"
-             SelectedIndexChanged="UnitPicker_SelectedIndexChanged"/>
+             SelectedIndexChanged="UnitPicker_SelectedIndexChanged"
+             MaximumWidthRequest="200"
+                />
 
             <!--Skapa kolumner och rader-->
             <Grid
@@ -51,6 +53,8 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <!---Primärvärden-->
+                <Label Text="Viktiga värden" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Label Text="Extra fält för testning (oviktiga)" Grid.Row="0" Grid.Column="3" VerticalOptions="Center" HorizontalOptions="End"/>
                 <Label Text="Ange primär spänning (V)" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
 
                 <Entry
@@ -111,7 +115,7 @@
                 
                 
                 
-                <Label Text="Aktiv effekt (h)" Grid.Row="3" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Label Text="Aktiv effekt (i antal h)" Grid.Row="3" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End"/>
                 <Entry
                   x:Name="EffectH"
                   IsReadOnly="True"
@@ -163,64 +167,74 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label Text="Ange en pulskonstant (pulser/xWh)" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
+                        
+                <Label Text="Ange en pulskonstant (pulser/xWh)" Grid.Row="1" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="End"/>
+                        
                 <Entry
                     x:Name="PulsConstant"
                        TextChanged="UpdateValuesReactive"
                     Placeholder="22000..."
                     Keyboard="Numeric"
                     Grid.Row="1"
-                    Grid.Column="1"
+                    Grid.Column="2"
                     Grid.ColumnSpan="1"
                     />
               
-                <Label Text="Uträknad pulsfrekvens (Hz)" Grid.Row="3" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
-                <Entry
+                <Label Text="Uträknad pulsfrekvens (Hz)" Grid.Row="3" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="End"/>
+                
+                        <Entry
                 x:Name="CalcPuls"
                 IsReadOnly="True"
                 Placeholder="t.ex. 230"
                 Keyboard="Numeric"
                 Grid.Row="3"
-                Grid.Column="1"
+                Grid.Column="2"
                 Grid.ColumnSpan="1"
             />
                 <Button
-             Text="Beräkna"
-             Grid.Row="4"
-             Grid.Column="0"
-             Grid.ColumnSpan="2"
-             Clicked="OnCalculatePulsFreq"
-             />
-                <Label Text="LED Pulsindikator" Grid.Row="2" Grid.Column="0"/>
+                 Text="Beräkna"
+                 Grid.Row="4"
+                 Grid.Column="1"
+                 Grid.ColumnSpan="1"
+                 Clicked="OnCalculatePulsFreq"
+                 />
+                <Entry
+                            x:Name="HzWarning"
+                            IsReadOnly="True"
+                            Grid.Row="4"
+                            Grid.Column="2"/>
+
+                <Label Text="LED Pulsindikator" Grid.Row="2" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="End"/>
+                        
                 <Entry
                 x:Name="Millis"
                 IsReadOnly="True"
                 Placeholder="Ms här"
                 Keyboard="Numeric"
                 Grid.Row="2"
-                Grid.Column="1"
+                Grid.Column="2"
                 Grid.ColumnSpan="1"
-            />
+                 />
 
                 <BoxView
                 x:Name="PulsIndicator"
                 Color="Gray"
-                WidthRequest="30"
-                HeightRequest="30"
+                WidthRequest="20"
+                HeightRequest="20"
                 CornerRadius="15"
                 Grid.Row="2"
-                Grid.Column="2"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"/>
+                Grid.Column="0"
+                />
 
 
             </Grid>
 
             <!---Räknevärksdelen-->
             <Label
-                 Text="Räknevärk"
+                 Text="Räkneverk"
                  Style="{StaticResource Headline}"
                  SemanticProperties.HeadingLevel="Level1" />
                     <Grid
@@ -240,7 +254,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <!-- 99999999-->
-                <Label Text="Ange Max mätarstäkkning (kW, heltal)" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
+                <Label Text="Ange Max mätarställning (heltal)" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
                 <Entry
                         x:Name="MeterMax"
                         Placeholder="99999999"
@@ -250,7 +264,7 @@
                         Grid.ColumnSpan="1"
                         />
                   <!--Resultat i år-->
-            <Label Text="Omslagstid för räknevärk" Grid.Row="2" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
+            <Label Text="Omslagstid för räkneverk" Grid.Row="2" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End"/>
                                 <Entry
                     x:Name="CalcCounter"
                     IsReadOnly="True"
@@ -264,9 +278,15 @@
                  Text="Beräkna"
                  Grid.Row="3"
                  Grid.Column="0"
-                 Grid.ColumnSpan="2"
+                 Grid.ColumnSpan="1"
                  Clicked="OnCalculateCounter"
                  />
+                <Entry
+                    x:Name="WarningCounter"
+                      IsReadOnly="True"
+                    Grid.Row="3"
+                    Grid.Column="1"/>
+
 
 
             </Grid>
